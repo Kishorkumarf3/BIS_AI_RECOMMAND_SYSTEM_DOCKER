@@ -11,6 +11,13 @@ import os
 import sys
 from pathlib import Path
 
+# Fix Unicode printing issues on Windows terminals
+if sys.stdout and hasattr(sys.stdout, "reconfigure"):
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
+
 try:
     from huggingface_hub import HfApi, login
 except ImportError:
@@ -63,7 +70,14 @@ def main():
         )
         print(f"✅ Space '{repo_id}' is ready.")
     except Exception as e:
-        print(f"⚠️ Notice when creating repo: {e}")
+        print(f"⚠️ Notice when creating repo via API: {e}")
+        print("\n👉 Note for Hugging Face Free Tier:")
+        print(f"Please create the Space once manually on the web:")
+        print(f"1. Go to: https://huggingface.co/new-space")
+        print(f"2. Space name: {space_name}")
+        print(f"3. Space SDK: Docker -> Blank")
+        print(f"4. Click 'Create Space'")
+        print("Then run this script again to upload your backend files!")
 
     backend_dir = Path(__file__).resolve().parent
 
