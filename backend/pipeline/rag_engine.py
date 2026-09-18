@@ -861,11 +861,25 @@ class RAGEngine:
             "is prohibited and punishable under law."
         )
 
+    def _translate_if_multilingual(self, query: str) -> str:
+        """Detect and auto-translate non-ASCII / Indian language queries (Hindi, Tamil, Telugu, etc.) to English."""
+        if any(ord(char) > 127 for char in query):
+            try:
+                from deep_translator import GoogleTranslator
+                translated = GoogleTranslator(source="auto", target="en").translate(query)
+                if translated:
+                    logger.info(f"Translated query from '{query}' to '{translated}'")
+                    return translated
+            except Exception:
+                pass
+        return query
+
     def recommend(self, query: str) -> List[Recommendation]:
         """
         End-to-end: curated rules matching + vector search → entity-aware re-ranking & threshold filtering →
         merge relational flags → return structured recommendations.
         """
+        query = self._translate_if_multilingual(query)
         curated_matches = self._match_curated_rules(query)
         if len(curated_matches) >= 1:
             return curated_matches[:5]
