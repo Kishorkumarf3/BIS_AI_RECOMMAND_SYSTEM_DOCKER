@@ -235,13 +235,15 @@ class RAGEngine:
             prod_lower = r["product_name_lower"]
             base_lower = r["base_code_lower"]
 
+            prod_clean = re.sub(r"\([^)]*\)", "", prod_lower).strip()
+
             # 1. Exact IS code or rule value match
             if base_lower in q_lower or r["rule_value"].lower() in q_lower:
                 score = 0.99
             elif any(d in q_digits and len(d) >= 3 for d in r["code_digits"]) and any(k in q_tokens for k in ["is", "standard", "code", "part", "iec"]):
                 score = 0.97
-            # 2. Product name full match
-            elif prod_lower in q_lower or (len(q_lower) >= 5 and q_lower in prod_lower):
+            # 2. Product name full match (strip parenthetical acronyms for substring matching)
+            elif prod_lower in q_lower or prod_clean in q_lower or (len(q_lower) >= 5 and q_lower in prod_clean):
                 score = 0.98
             else:
                 # Token overlap with product name
