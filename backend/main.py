@@ -64,6 +64,7 @@ class RecommendRequest(BaseModel):
 class NormativeRef(BaseModel):
     is_code: str
     title: str
+    relation: str = "testing"
 
 
 class RecommendItem(BaseModel):
@@ -179,13 +180,22 @@ async def recommend(
                 simplified = True
                 fast_track_days = std.simplified_procedure.fast_track_days
 
-            # Fetch normative references from relational M2M
+        # Prefer enriched rec.normative_refs, fallback to std.normative_refs
+        refs = []
+        if rec.normative_refs:
             refs = [
-                NormativeRef(is_code=r.is_code, title=r.title)
+                NormativeRef(
+                    is_code=r["is_code"] if isinstance(r, dict) else r.is_code,
+                    title=r["title"] if isinstance(r, dict) else r.title,
+                    relation=r.get("relation", "testing") if isinstance(r, dict) else getattr(r, "relation", "testing")
+                )
+                for r in rec.normative_refs
+            ]
+        elif std and std.normative_refs:
+            refs = [
+                NormativeRef(is_code=r.is_code, title=r.title, relation="testing")
                 for r in std.normative_refs
             ]
-        else:
-            refs = [NormativeRef(**r) for r in rec.normative_refs]
 
         items.append(
             RecommendItem(
