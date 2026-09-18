@@ -1,0 +1,844 @@
+{
+  "Packaged Drinking Water": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 14543:2016",
+      "Context": "Packaged drinking water (other than packaged natural mineral water) specification and microbiological safety requirements."
+    }
+  ],
+  "Packaged Natural Mineral Water": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 13428:2005",
+      "Context": "Safety, mineral content tolerances, and hygiene requirements for naturally sourced mineral water."
+    }
+  ],
+  "Ordinary Portland Cement (OPC)": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 269:2015",
+      "Context": "Covers 33, 43, and 53 grade ordinary Portland cement composition, fineness, and compressive strength limits."
+    }
+  ],
+  "Portland Pozzolana Cement (PPC)": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 1489 (Part 1):2015",
+      "Context": "Fly ash based Portland Pozzolana cement manufacturing and physical/chemical requirements."
+    },
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 1489 (Part 2):2015",
+      "Context": "Calcined clay based Portland Pozzolana cement specification."
+    }
+  ],
+  "Portland Slag Cement (PSC)": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 455:2015",
+      "Context": "Specification for Portland slag cement made using granulated blast furnace slag."
+    }
+  ],
+  "TMT Steel Bars": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 1786:2008",
+      "Context": "High strength deformed steel bars and wires for concrete reinforcement (Fe 415, Fe 500, Fe 550, Fe 600 grades)."
+    }
+  ],
+  "Structural Steel": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 2062:2011",
+      "Context": "Hot rolled medium and high tensile structural steel for buildings, bridges, and general engineering."
+    }
+  ],
+  "Plain and Reinforced Concrete": [
+    {
+      "state_name": "General Standard",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 456:2000",
+      "Context": "Core code of practice for design and construction of plain and reinforced concrete structures."
+    }
+  ],
+  "Ready-Mixed Concrete (RMC)": [
+    {
+      "state_name": "Voluntary Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 4926:2003",
+      "Context": "Code of practice specifying production, testing, batching, and delivery criteria for ready-mixed concrete."
+    }
+  ],
+  "Concrete Admixtures": [
+    {
+      "state_name": "Product Standard",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 9103:1999",
+      "Context": "Specifications for chemical admixtures used in concrete (plasticizers, superplasticizers, retarders, accelerators)."
+    }
+  ],
+  "Autoclaved Aerated Concrete (AAC) Blocks": [
+    {
+      "state_name": "Product Standard",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 2185 (Part 3):1984",
+      "Context": "Specification for autoclaved cellular (aerated) concrete precast masonry units."
+    }
+  ],
+  "Precast Concrete Blocks": [
+    {
+      "state_name": "Product Standard",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 2185 (Part 1):2005",
+      "Context": "Hollow and solid precast concrete masonry units used in building construction."
+    }
+  ],
+  "Ceramic and Vitrified Tiles": [
+    {
+      "state_name": "Product Standard",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 15622:2017",
+      "Context": "Specifications for pressed ceramic, glazed, and vitrified tiles regarding water absorption, scratch hardness, and strength."
+    }
+  ],
+  "UPVC Pipes for Potable Water Supplies": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 4985:2021",
+      "Context": "Unplasticized polyvinyl chloride pipes for potable water distribution systems."
+    }
+  ],
+  "HDPE Pipes for Water Supply": [
+    {
+      "state_name": "Product Standard",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 4984:2016",
+      "Context": "High-density polyethylene pipes used for underground water mains and irrigation."
+    }
+  ],
+  "Galvanized Steel Tubes and Pipes": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 1239 (Part 1):2004",
+      "Context": "Mild steel tubulars and pipes suitable for welding or screwing to pipe threads."
+    }
+  ],
+  "Plywood for General Purposes": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 303:1989",
+      "Context": "Specification for Moisture Resistant (MR) and Boiling Water Resistant (BWR) grade plywood."
+    }
+  ],
+  "Marine Plywood": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 710:2010",
+      "Context": "High endurance plywood treated to resist fungal attacks and withstand prolonged exposure to water."
+    }
+  ],
+  "Fire Retardant Plywood": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 5509:2021",
+      "Context": "Flame-spread-resistant treated plywood used for commercial interiors and transport coaches."
+    }
+  ],
+  "Wooden Flush Door Shutters": [
+    {
+      "state_name": "Product Standard",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 2202 (Part 1):1999",
+      "Context": "Solid core wooden flush door shutters with face panels of plywood, hardboard, or veneers."
+    }
+  ],
+  "Helmets for Two-Wheeler Riders": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 4151:2015",
+      "Context": "Protective helmets for motorcycle and scooter riders covering shock absorption, retention, and peripheral vision."
+    }
+  ],
+  "Safety Glass for Road Transport": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 2553 (Part 2):2019",
+      "Context": "Laminated and toughened safety glass panels used in road transport vehicle windscreens and windows."
+    }
+  ],
+  "Automotive Tyres - Passenger Car": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 15633:2005",
+      "Context": "Pneumatic tyres for passenger cars with requirements for dimensional, load, and speed performance."
+    }
+  ],
+  "Automotive Tyres - Commercial Vehicles": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 15636:2012",
+      "Context": "Pneumatic tyres intended for trucks, buses, and commercial transport vehicles."
+    }
+  ],
+  "Two and Three Wheeler Tyres": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 15627:2005",
+      "Context": "Pneumatic tyres for scooters, motorcycles, and autorickshaws."
+    }
+  ],
+  "Automotive Tyre Tubes": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 13098:2012",
+      "Context": "Rubber inner tubes for automotive pneumatic tyres across commercial and non-commercial categories."
+    }
+  ],
+  "Domestic Pressure Cookers": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 2347:2017",
+      "Context": "Safety and performance requirements for domestic pressure cookers made from aluminium or stainless steel."
+    }
+  ],
+  "Domestic Gas Stoves (LPG)": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 4246:2002",
+      "Context": "Gas stoves and burner assemblies operating on liquefied petroleum gas for household use."
+    }
+  ],
+  "LPG Cylinders for Domestic Use": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 3196 (Part 1):2013",
+      "Context": "Welded low carbon steel cylinders for low pressure liquefiable gases exceeding 5-litre water capacity."
+    }
+  ],
+  "Valves for LPG Cylinders": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 8737:2019",
+      "Context": "Valve fittings for use with domestic and commercial LPG cylinders."
+    }
+  ],
+  "Electric Iron": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 366:1991",
+      "Context": "Safety and performance requirements of dry and steam electric household irons."
+    }
+  ],
+  "Electric Immersion Water Heaters": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 368:2014",
+      "Context": "Electric immersion water heaters used for domestic heating of water in buckets or portable containers."
+    }
+  ],
+  "Stationary Storage Electric Water Heaters (Geysers)": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 2082:2018",
+      "Context": "Safety, pressure tolerance, and energy efficiency parameters for household electric geysers."
+    }
+  ],
+  "Electric Food Mixers, Grinders, and Blenders": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 4250:1980",
+      "Context": "Domestic electric food preparation machines, mixer-grinders, and liquidizers."
+    }
+  ],
+  "Electric Room Heaters": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 302 (Part 2/Sec 30):2007",
+      "Context": "Safety guidelines for domestic electric room heaters, convectors, and radiant radiant heaters."
+    }
+  ],
+  "Electric Toasters": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 302 (Part 2/Sec 9):2009",
+      "Context": "Safety criteria for electric toasters, grills, roasters, and similar household cooking appliances."
+    }
+  ],
+  "Microwave Ovens": [
+    {
+      "state_name": "Compulsory Registration Scheme",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 302 (Part 2/Sec 25):2014",
+      "Context": "Safety and radiation leak prevention standards for household microwave ovens."
+    }
+  ],
+  "Ceiling Fans and Regulators": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 374:2019",
+      "Context": "Electric ceiling fans and associated regulators regarding air delivery and electrical insulation."
+    }
+  ],
+  "Electric Air Coolers": [
+    {
+      "state_name": "Product Standard",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 3315:2019",
+      "Context": "Evaporative air coolers (desert coolers) electrical safety, motor ratings, and airflow standards."
+    }
+  ],
+  "Domestic Refrigerators": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 17550 (Part 1):2021",
+      "Context": "Household refrigerating appliances energy consumption, cooling capacity, and mechanical safety."
+    }
+  ],
+  "Room Air Conditioners": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 1391 (Part 1):2017",
+      "Context": "Unitary air conditioners (window type) performance, noise levels, and electrical safety."
+    },
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 1391 (Part 2):2018",
+      "Context": "Split air conditioners split across indoor and outdoor unit specifications."
+    }
+  ],
+  "PVC Insulated Cables (up to 1100V)": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 694:2010",
+      "Context": "Polyvinyl chloride insulated unsheathed and sheathed electrical cables for working voltages up to 1100 V."
+    }
+  ],
+  "XLPE Insulated Power Cables": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 7098 (Part 1):1988",
+      "Context": "Cross-linked polyethylene insulated PVC sheathed cables for working voltage up to and including 1100 V."
+    },
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 7098 (Part 2):2011",
+      "Context": "XLPE insulated cables for working voltages from 3.3 kV up to and including 33 kV."
+    }
+  ],
+  "Self-Ballasted LED Lamps": [
+    {
+      "state_name": "Compulsory Registration Scheme",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 16102 (Part 1):2012",
+      "Context": "Safety requirements for self-ballasted LED lamps used for general lighting services."
+    },
+    {
+      "state_name": "Compulsory Registration Scheme",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 16102 (Part 2):2012",
+      "Context": "Performance requirements for self-ballasted LED lamps."
+    }
+  ],
+  "Fixed General Purpose LED Luminaires": [
+    {
+      "state_name": "Compulsory Registration Scheme",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 10322 (Part 5/Sec 1):2012",
+      "Context": "Safety and constructional requirements for fixed general purpose indoor and outdoor luminaires."
+    }
+  ],
+  "Solar Photovoltaic (PV) Modules": [
+    {
+      "state_name": "Compulsory Registration Scheme",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 14286:2010",
+      "Context": "Design qualification and type approval for crystalline silicon terrestrial photovoltaic modules."
+    },
+    {
+      "state_name": "Compulsory Registration Scheme",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS/IEC 61730 (Part 1):2004",
+      "Context": "Photovoltaic module safety qualification covering construction standards."
+    }
+  ],
+  "Solar Inverters": [
+    {
+      "state_name": "Compulsory Registration Scheme",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 16221 (Part 2):2015",
+      "Context": "Safety of power converters for use in photovoltaic power systems."
+    }
+  ],
+  "Solar Flat Plate Collectors": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 12933 (Part 1):2003",
+      "Context": "Requirements for solar flat plate collectors incorporating liquid heating systems."
+    }
+  ],
+  "Mobile Phones": [
+    {
+      "state_name": "Compulsory Registration Scheme",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 13252 (Part 1):2010",
+      "Context": "General safety requirements for information technology equipment including handheld mobile phones."
+    }
+  ],
+  "Laptops and Notebooks": [
+    {
+      "state_name": "Compulsory Registration Scheme",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 13252 (Part 1):2010",
+      "Context": "Electrical shock, heating, and fire hazard safety guidelines for portable computers."
+    }
+  ],
+  "Tablet Computers": [
+    {
+      "state_name": "Compulsory Registration Scheme",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 13252 (Part 1):2010",
+      "Context": "Information technology safety requirements covering portable tablet devices."
+    }
+  ],
+  "Power Banks": [
+    {
+      "state_name": "Compulsory Registration Scheme",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 13252 (Part 1):2010",
+      "Context": "Safety benchmarks for portable external battery backup packs and mobile power banks."
+    }
+  ],
+  "Smart Watches": [
+    {
+      "state_name": "Compulsory Registration Scheme",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 13252 (Part 1):2010",
+      "Context": "Wearable electronic device safety standards under the Compulsory Registration Scheme."
+    }
+  ],
+  "Secondary Lithium-ion Cells and Batteries": [
+    {
+      "state_name": "Compulsory Registration Scheme",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 16046 (Part 2):2018",
+      "Context": "Safety requirements for portable sealed secondary lithium cells and batteries used in electronics."
+    }
+  ],
+  "Secondary Nickel Cells and Batteries": [
+    {
+      "state_name": "Compulsory Registration Scheme",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 16046 (Part 1):2018",
+      "Context": "Safety requirements for portable sealed secondary nickel-based battery chemistries."
+    }
+  ],
+  "Lead-Acid Storage Batteries": [
+    {
+      "state_name": "Product Standard",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 14257:1995",
+      "Context": "Lead-acid storage batteries for motor vehicles with light-weight low maintenance specifications."
+    }
+  ],
+  "Television Sets": [
+    {
+      "state_name": "Compulsory Registration Scheme",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 616:2017",
+      "Context": "Audio, video, and similar electronic apparatus safety requirements covering CRT, LCD, and LED displays."
+    }
+  ],
+  "Wireless Keyboards and Mice": [
+    {
+      "state_name": "Compulsory Registration Scheme",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 13252 (Part 1):2010",
+      "Context": "Electronic input peripherals electrical and battery terminal safety regulations."
+    }
+  ],
+  "Audio Amplifiers and Wireless Speakers": [
+    {
+      "state_name": "Compulsory Registration Scheme",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 616:2017",
+      "Context": "Safety parameters for electronic sound amplifiers, public address systems, and Bluetooth speakers."
+    }
+  ],
+  "Smart Electricity Meters": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 16444 (Part 1):2015",
+      "Context": "AC static direct connected smart electricity meters for active energy metering."
+    }
+  ],
+  "AC Static Watt-hour Meters": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 13779:1999",
+      "Context": "AC static watt-hour meters of Class 1 and Class 2 accuracy for consumer electricity accounting."
+    }
+  ],
+  "Miniature Circuit Breakers (MCBs)": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS/IEC 60898-1:2015",
+      "Context": "Circuit breakers for overcurrent protection in household and commercial electrical installations."
+    }
+  ],
+  "Residual Current Circuit Breakers (RCCBs)": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 12640 (Part 1):2016",
+      "Context": "Residual current operated circuit breakers without integral overcurrent protection (RCCBs) for domestic circuits."
+    }
+  ],
+  "Moulded Case Circuit Breakers (MCCBs)": [
+    {
+      "state_name": "Product Standard",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS/IEC 60947-2:2016",
+      "Context": "Low-voltage switchgear and controlgear circuit breakers for industrial power feeds."
+    }
+  ],
+  "Distribution Transformers": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 1180 (Part 1):2014",
+      "Context": "Outdoor/indoor type oil-immersed distribution transformers up to and including 2500 kVA, 33 kV."
+    }
+  ],
+  "Three-Phase Induction Motors": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 12615:2018",
+      "Context": "Line operated three-phase cage induction motors with energy efficiency classes (IE2, IE3, IE4)."
+    }
+  ],
+  "Single-Phase AC Motors": [
+    {
+      "state_name": "Product Standard",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 996:2009",
+      "Context": "Single-phase small AC electric motors used in domestic appliances and small pump sets."
+    }
+  ],
+  "Toys - Mechanical and Physical Properties": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 9873 (Part 1):2019",
+      "Context": "Safety aspects relating to mechanical and physical properties of children's toys to prevent choking and punctures."
+    }
+  ],
+  "Toys - Flammability": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 9873 (Part 2):2017",
+      "Context": "Flammability resistance testing and flame spread limits across plush, plastic, and fabric toys."
+    }
+  ],
+  "Toys - Migration of Certain Elements": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 9873 (Part 3):2020",
+      "Context": "Bio-availability limits for heavy metal chemical elements (lead, cadmium, arsenic, mercury) in toys."
+    }
+  ],
+  "Electric Toys": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 15644:2006",
+      "Context": "Safety of electric toys operating at low voltages regarding heat, short-circuiting, and moisture."
+    }
+  ],
+  "Gold Hallmarking": [
+    {
+      "state_name": "Mandatory Hallmarking",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 1417:2016",
+      "Context": "Gold and gold alloys, jewellery/artefacts fineness, purity markings, and hallmarking requirements."
+    }
+  ],
+  "Silver Hallmarking": [
+    {
+      "state_name": "Voluntary Hallmarking",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 2112:2014",
+      "Context": "Silver and silver alloy jewellery/artefacts grades, assaying, and hallmarking standards."
+    }
+  ],
+  "Infant Milk Food": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 14433:2007",
+      "Context": "Infant formula milk substitutes nutritional thresholds, hygiene, and packaging specifications."
+    }
+  ],
+  "Milk Powder": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 1165:2002",
+      "Context": "Requirements for whole milk powder, partly skimmed milk powder, and skimmed milk powder."
+    }
+  ],
+  "Condensed Milk": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 1166:2020",
+      "Context": "Specification for sweetened condensed milk and condensed skimmed milk."
+    }
+  ],
+  "Safety Footwear": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 15298 (Part 2):2016",
+      "Context": "Personal protective equipment safety footwear with toe protection against 200J impacts."
+    }
+  ],
+  "Protective Footwear": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 15298 (Part 3):2016",
+      "Context": "Footwear fitted with toecaps designed to give protection against lower level impacts (100J)."
+    }
+  ],
+  "Rubber Hawai Chappal": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 10702:2023",
+      "Context": "Physical durability, strap tension, and abrasion tests for rubber flip-flops and slippers."
+    }
+  ],
+  "Canvas Footwear": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 3735:2021",
+      "Context": "Specification for canvas shoes with rubber sole for general purposes."
+    }
+  ],
+  "Portable Fire Extinguishers": [
+    {
+      "state_name": "Product Standard",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 15683:2018",
+      "Context": "Performance and construction standards for portable fire extinguishers (water, foam, powder, CO2, clean agent)."
+    }
+  ],
+  "Fire Hose Delivery Couplings": [
+    {
+      "state_name": "Product Standard",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 903:1993",
+      "Context": "Specification for fire hose delivery couplings, branch pipes, nozzles, and dividing breechings."
+    }
+  ],
+  "Disposable Hypodermic Syringes": [
+    {
+      "state_name": "Product Standard",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 10245:1982",
+      "Context": "Sterile hypodermic syringes for single use made of plastic materials."
+    }
+  ],
+  "Surgical Rubber Gloves": [
+    {
+      "state_name": "Product Standard",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 13422:1992",
+      "Context": "Sterile rubber surgical gloves evaluation regarding tensile strength, elongation, and puncture resistance."
+    }
+  ],
+  "Clinical Electronic Thermometers": [
+    {
+      "state_name": "Product Standard",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 16180:2014",
+      "Context": "Electrical thermometers with maximum device reading for medical temperature measurement."
+    }
+  ],
+  "Medical Electrical Equipment": [
+    {
+      "state_name": "Product Standard",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 13450 (Part 1):2018",
+      "Context": "General requirements for basic safety and essential performance of medical electrical systems."
+    }
+  ],
+  "Surgical Face Masks": [
+    {
+      "state_name": "Product Standard",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 16289:2014",
+      "Context": "Medical face masks specifications regarding bacterial filtration efficiency, differential pressure, and splash resistance."
+    }
+  ],
+  "Protective Rubber Gloves for Electrical Purposes": [
+    {
+      "state_name": "Product Standard",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 4770:1991",
+      "Context": "Insulating gloves used by electrical line workers against electric shock hazards."
+    }
+  ],
+  "Sanitary Napkins": [
+    {
+      "state_name": "Product Standard",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 5405:2019",
+      "Context": "Absorbency, pH value, hygiene, and biodegradability parameters for sanitary napkins."
+    }
+  ],
+  "Aluminium Foil for Food Packaging": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 15392:2020",
+      "Context": "Chemical purity and thickness tolerances for bare aluminium and aluminium alloy foil used in food contact packaging."
+    }
+  ],
+  "Tinplate for Food Packaging": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 1997:2006",
+      "Context": "Electrolytic tinplate and single cold-reduced blackplate for food and beverage cans."
+    }
+  ],
+  "Corrugated Fibreboard Boxes": [
+    {
+      "state_name": "Product Standard",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 2771 (Part 1):1990",
+      "Context": "Specification for corrugated fibreboard boxes for general transit and storage packaging."
+    }
+  ],
+  "HDPE and PP Woven Sacks": [
+    {
+      "state_name": "Product Standard",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 11652:2017",
+      "Context": "High density polyethylene (HDPE) and polypropylene (PP) woven sacks for packing foodgrains and commodities."
+    }
+  ],
+  "Jute Bags for Packing Foodgrains": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 12650:2018",
+      "Context": "Jute bags for packing 50 kg foodgrains with specific breaking strength and seam properties."
+    }
+  ],
+  "Seamless Steel Gas Cylinders": [
+    {
+      "state_name": "Mandatory Certification",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 7285 (Part 2):2017",
+      "Context": "Refillable seamless steel gas cylinders for high pressure industrial and medical gases."
+    }
+  ],
+  "Earthquake Resistant Design": [
+    {
+      "state_name": "National Building Code Standard",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 1893 (Part 1):2016",
+      "Context": "Criteria for earthquake resistant design of structures - general provisions and seismic zones."
+    }
+  ],
+  "Ductile Detailing of RC Structures": [
+    {
+      "state_name": "Structural Safety Standard",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 13920:2016",
+      "Context": "Ductile design and detailing of reinforced concrete structures subjected to seismic forces."
+    }
+  ],
+  "Structural Design Dead and Imposed Loads": [
+    {
+      "state_name": "Design Code",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 875 (Part 1):1987",
+      "Context": "Unit weights of building materials and stored materials (dead loads)."
+    },
+    {
+      "state_name": "Design Code",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 875 (Part 2):1987",
+      "Context": "Imposed floor and roof design loads for civil engineering structures."
+    },
+    {
+      "state_name": "Design Code",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 875 (Part 3):2015",
+      "Context": "Wind load calculations for structural engineering and high-rise design."
+    }
+  ],
+  "Safety Matches": [
+    {
+      "state_name": "Product Standard",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 2653:2015",
+      "Context": "Safety matches in boxes specifications regarding splint strength, ignition, and non-spluttering chemical composition."
+    }
+  ],
+  "PVC Pipes for Agricultural Use": [
+    {
+      "state_name": "Product Standard",
+      "Rule_type": "IS_CODE",
+      "Rule_value": "IS 4985:2021",
+      "Context": "Unplasticized PVC pipes engineered for agricultural irrigation, tube wells, and drainage."
+    }
+  ]
+}
