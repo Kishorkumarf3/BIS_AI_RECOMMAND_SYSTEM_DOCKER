@@ -261,7 +261,11 @@ class RAGEngine:
                         "helmets", "helmet", "geysers", "geyser", "tinplate", "hallmarking",
                         "admixtures", "syringes", "napkins", "cookers", "toasters", "microwaves",
                         "refrigerators", "inverters", "chappal", "plywood", "cement", "tiles",
-                        "tyres", "transformers", "mcb", "mccb", "rccb", "fans", "motors"
+                        "tyres", "transformers", "mcb", "mccb", "rccb", "fans", "motors",
+                        "switches", "switch", "lighting", "cables", "cable", "wires", "wire",
+                        "pipes", "pipe", "tubes", "tube", "steel", "doors", "door", "windows",
+                        "window", "glass", "footwear", "shoes", "sanitary", "bags", "sacks",
+                        "boxes", "lamps", "luminaires", "meters", "solar", "batteries", "battery"
                     }
                     if single_word in high_intent_terms:
                         score = 0.93
@@ -899,7 +903,16 @@ class RAGEngine:
                 {"is_code": "IS 1786:2008", "title": "High Strength Deformed Steel Bars for Concrete Reinforcement", "relation": "safety"},
                 {"is_code": "IS 2629:1985", "title": "Recommended Practice for Hot-Dip Galvanizing of Iron & Steel", "relation": "method"},
             ])
-        elif "cable" in title or "wire" in title or "switch" in title or "motor" in title or "electrical" in cat:
+        elif "switch" in title or "lighting" in title or "socket" in title:
+            refs.extend([
+                {"is_code": "IS 1293:2019", "title": "Plugs and Socket-Outlets of Rated Voltage up to 250V", "relation": "safety"},
+                {"is_code": "IS 694:2010", "title": "PVC Insulated Cables for Working Voltages up to 1100V", "relation": "material"},
+                {"is_code": "IS 10322 (Part 5)", "title": "Fixed General Purpose LED Luminaires for Indoor/Office", "relation": "testing"},
+                {"is_code": "IS/IEC 60898-1", "title": "Circuit Breakers for Overcurrent Protection in Buildings", "relation": "safety"},
+                {"is_code": "IS 3043:2018", "title": "Code of Practice for Electrical Earthing Systems", "relation": "method"},
+                {"is_code": "IS 13947 (Part 3)", "title": "Low-Voltage Switchgear and Controlgear Switches", "relation": "testing"},
+            ])
+        elif "cable" in title or "wire" in title or "motor" in title or "electrical" in cat:
             refs.extend([
                 {"is_code": "IS 10810 (Part 45)", "title": "Methods of Test for Cables - High Voltage Test", "relation": "testing"},
                 {"is_code": "IS 10810 (Part 58)", "title": "Oxygen Index Test for Flame Retardant Cables", "relation": "safety"},

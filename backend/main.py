@@ -132,14 +132,27 @@ async def recommend(
 
     # Resilient fallback: If RAG vector search is empty or warming up, match against SQLite standards catalog
     if not recs:
+        q_low = req.query.lower()
+        is_elec_q = any(w in q_low for w in ["switch", "switches", "light", "lighting", "wire", "cable", "plug", "socket", "mcb", "rccb", "meter", "transformer"])
+        is_steel_q = any(w in q_low for w in ["steel", "rebar", "tmt", "tube", "pipe", "structural steel", "sheet", "cgi"])
+        is_cement_q = any(w in q_low for w in ["cement", "concrete", "rcc", "tile", "paver", "block"])
+
         keywords = [
-            w for w in re.findall(r'\b[a-zA-Z]{3,}\b', req.query.lower())
-            if w not in {"for", "the", "and", "with", "from", "goods", "supply", "units", "residential", "construction"}
+            w for w in re.findall(r'\b[a-zA-Z]{3,}\b', q_low)
+            if w not in {"for", "the", "and", "with", "from", "goods", "supply", "units", "residential", "construction", "office"}
         ]
         stmt = select(Standard)
         all_stds = db.execute(stmt).scalars().all()
         scored = []
         for s in all_stds:
+            s_cat = (s.category or "").lower()
+            if is_elec_q and any(bad in s_cat for bad in ["steel", "metallurgy", "plastics", "civil", "footwear"]):
+                continue
+            if is_steel_q and any(bad in s_cat for bad in ["electrical", "electronics", "food", "medical", "toys"]):
+                continue
+            if is_cement_q and any(bad in s_cat for bad in ["electrical", "electronics", "steel", "food", "medical"]):
+                continue
+
             text = f"{s.title} {s.scope or ''} {s.is_code}".lower()
             matches = sum(1 for kw in keywords if kw in text)
             if matches > 0:
