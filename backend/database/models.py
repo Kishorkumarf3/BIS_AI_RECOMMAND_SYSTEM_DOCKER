@@ -92,3 +92,16 @@ class SimplifiedProcedure754(Base):
     notes = Column(Text, nullable=True)
 
     standard = relationship("Standard", back_populates="simplified_procedure")
+
+class CuratedRule(Base):
+    """
+    Curated certification rules and standards, previously stored in bis_rules.json.
+    """
+    __tablename__ = "curated_rules"
+
+    id = Column(Integer, primary_key=True, index=True)
+    product_name = Column(String(300), nullable=False, index=True)
+    state_name = Column(String(100))
+    rule_type = Column(String(100))
+    rule_value = Column(String(100))
+    context = Column(Text)

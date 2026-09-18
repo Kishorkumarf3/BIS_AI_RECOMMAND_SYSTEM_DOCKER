@@ -17,7 +17,7 @@ backend_dir = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(backend_dir))
 
 from database import engine, SessionLocal, Base
-from database.models import Standard, QCOAlert, SimplifiedProcedure754
+from database.models import Standard, QCOAlert, SimplifiedProcedure754, CuratedRule
 
 DATA_FILE = backend_dir / "data" / "bis_rules.json"
 
@@ -280,6 +280,21 @@ def populate_sqlite(rules_data: Dict[str, List[Dict[str, Any]]]):
                         notes="Eligible for Option 2 Simplified Procedure (Grant of license within 30 days).",
                     )
                     db.add(sp)
+
+                # Add to CuratedRule table
+                existing_curated = db.query(CuratedRule).filter(
+                    CuratedRule.product_name == product_name,
+                    CuratedRule.rule_value == rule_val
+                ).first()
+                if not existing_curated:
+                    cr = CuratedRule(
+                        product_name=product_name,
+                        state_name=state_name,
+                        rule_type=entry.get("Rule_type", "IS_CODE"),
+                        rule_value=rule_val,
+                        context=context
+                    )
+                    db.add(cr)
 
         db.commit()
         print(f"[+] SQLite sync complete: {added_count} added, {updated_count} updated. Total in DB: {db.query(Standard).count()}")

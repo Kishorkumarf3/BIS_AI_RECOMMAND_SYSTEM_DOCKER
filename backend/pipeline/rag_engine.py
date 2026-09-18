@@ -23,12 +23,16 @@ except ImportError:
 from qdrant_client import QdrantClient
 from qdrant_client.http import models as qdrant_models
 
+import sys
+backend_dir = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(backend_dir))
+from database import SessionLocal
+from database.models import CuratedRule
 # --- Configuration ---
 QDRANT_URL = os.getenv("QDRANT_URL", "http://localhost:6333")
 QDRANT_COLLECTION = os.getenv("QDRANT_COLLECTION", "bis_standards")
 EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "sentence-transformers/all-MiniLM-L6-v2")
 LLM_MODEL_PATH = os.getenv("LLM_MODEL_PATH", "models/mistral-7b-instruct.Q4_K_M.gguf")
-RULES_FILE = Path(__file__).resolve().parent.parent / "data" / "bis_rules.json"
 
 CATEGORY_MAP = {
     "Packaged Drinking Water": "Food & Agriculture",
@@ -167,53 +171,49 @@ class RAGEngine:
         return self._embeddings
 
     def _load_curated_rules(self) -> List[Dict[str, Any]]:
-        """Load curated certification rules and standards dataset from bis_rules.json."""
+        """Load curated certification rules and standards dataset from SQLite database."""
         rules = []
-        if not RULES_FILE.exists():
-            return rules
-
+        db = SessionLocal()
         try:
-            with open(RULES_FILE, "r", encoding="utf-8") as f:
-                data = json.load(f)
-
-            for product_name, entries in data.items():
+            curated_records = db.query(CuratedRule).all()
+            for record in curated_records:
+                product_name = record.product_name
+                rule_val = record.rule_value
+                state_name = record.state_name
+                context = record.context
                 cat = CATEGORY_MAP.get(product_name, "General Engineering & Consumer Goods")
-                for entry in entries:
-                    rule_val = entry.get("Rule_value", "")
-                    state_name = entry.get("state_name", "Product Standard")
-                    context = entry.get("Context", "")
 
-                    # Extract base IS code e.g. "IS 14543:2016" -> "IS 14543"
-                    m = re.match(r"^(.*?)(?::(\d{4}))?$", rule_val.strip())
-                    base_code = m.group(1).strip() if m else rule_val.strip()
-                    year = int(m.group(2)) if m and m.group(2) else None
+                m = re.match(r"^(.*?)(?::(\d{4}))?$", rule_val.strip())
+                base_code = m.group(1).strip() if m else rule_val.strip()
+                year = int(m.group(2)) if m and m.group(2) else None
 
-                    is_qco = state_name in [
-                        "Mandatory Certification",
-                        "Compulsory Registration Scheme",
-                        "Mandatory Hallmarking"
-                    ]
-                    is_crs = state_name == "Compulsory Registration Scheme"
+                is_qco = state_name in [
+                    "Mandatory Certification",
+                    "Compulsory Registration Scheme",
+                    "Mandatory Hallmarking"
+                ]
+                is_crs = state_name == "Compulsory Registration Scheme"
+                code_digits = re.findall(r"\d+", base_code)
 
-                    code_digits = re.findall(r"\d+", base_code)
-
-                    rules.append({
-                        "product_name": product_name,
-                        "product_name_lower": product_name.lower(),
-                        "rule_value": rule_val,
-                        "base_code": base_code,
-                        "base_code_lower": base_code.lower(),
-                        "code_digits": code_digits,
-                        "state_name": state_name,
-                        "context": context,
-                        "year": year,
-                        "category": cat,
-                        "is_qco": is_qco,
-                        "is_crs": is_crs,
-                        "simplified_procedure": True,
-                    })
+                rules.append({
+                    "product_name": product_name,
+                    "product_name_lower": product_name.lower(),
+                    "rule_value": rule_val,
+                    "base_code": base_code,
+                    "base_code_lower": base_code.lower(),
+                    "code_digits": code_digits,
+                    "state_name": state_name,
+                    "context": context,
+                    "year": year,
+                    "category": cat,
+                    "is_qco": is_qco,
+                    "is_crs": is_crs,
+                    "simplified_procedure": True,
+                })
         except Exception as e:
-            print(f"[-] Warning loading curated rules: {e}")
+            print(f"[-] Warning loading curated rules from DB: {e}")
+        finally:
+            db.close()
 
         return rules
 
