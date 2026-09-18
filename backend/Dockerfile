@@ -25,8 +25,8 @@ RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTr
 # Copy the rest of the backend source code
 COPY . .
 
-# Expose the API port
-EXPOSE 8000
+# Expose the API port (Hugging Face Spaces default is 7860)
+EXPOSE 7860
 
-# Command to run the application
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Command to run the application (defaults to 7860 for HF Spaces / Cloud compatibility)
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "7860"]

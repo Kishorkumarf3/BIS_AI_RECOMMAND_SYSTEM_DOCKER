@@ -1,3 +1,12 @@
+---
+title: BIS AI Recommendation Engine Backend
+emoji: ⚡
+colorFrom: blue
+colorTo: indigo
+sdk: docker
+app_port: 7860
+---
+
 # BIS Standards Recommendation Engine — Backend
 
 FastAPI backend powering the AI-driven mapping of procurement requirements to
