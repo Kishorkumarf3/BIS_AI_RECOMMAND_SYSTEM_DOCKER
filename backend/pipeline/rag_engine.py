@@ -288,9 +288,8 @@ class RAGEngine:
     # --- Initialization helpers ---
 
     def _init_embeddings(self) -> Any:
-        # Prevent 512MB RAM OOM kill on Render free tier
-        if os.environ.get("RENDER") or os.environ.get("DISABLE_TORCH") == "1" or os.environ.get("LOW_MEMORY") == "1":
-            logger.info("Cloud/Render environment detected: using instant in-memory rule engine and catalog matching.")
+        if os.environ.get("DISABLE_TORCH") == "1" or os.environ.get("LOW_MEMORY") == "1":
+            logger.info("Low memory environment detected: using instant in-memory rule engine and catalog matching.")
             return None
 
         try:
