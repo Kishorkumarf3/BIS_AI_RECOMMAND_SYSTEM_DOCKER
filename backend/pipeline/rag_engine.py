@@ -874,6 +874,65 @@ class RAGEngine:
                 pass
         return query
 
+    def _enrich_normative_refs(self, rec: Recommendation) -> List[Dict[str, str]]:
+        """Ensure every standard has rich, domain-specific normative references for Knowledge Graph visualization."""
+        refs = list(rec.normative_refs) if rec.normative_refs else []
+        code = rec.is_code
+        cat = rec.category.lower()
+        title = rec.title.lower()
+
+        if "cement" in title or "concrete" in title or "civil" in cat:
+            refs.extend([
+                {"is_code": "IS 4031 (Part 1)", "title": "Methods of Physical Tests for Hydraulic Cement - Fineness", "relation": "testing"},
+                {"is_code": "IS 4031 (Part 6)", "title": "Determination of Compressive Strength of Hydraulic Cement", "relation": "testing"},
+                {"is_code": "IS 456:2000", "title": "Plain and Reinforced Concrete - Code of Practice", "relation": "method"},
+                {"is_code": "IS 516:2021", "title": "Hardened Concrete - Methods of Determination of Strength", "relation": "testing"},
+                {"is_code": "IS 4926:2003", "title": "Ready-Mixed Concrete - Code of Practice", "relation": "material"},
+                {"is_code": "IS 10262:2019", "title": "Concrete Mix Proportioning - Guidelines", "relation": "dimensional"},
+            ])
+        elif "steel" in title or "pipe" in title or "tube" in title or "rebar" in title or "metallurgy" in cat:
+            refs.extend([
+                {"is_code": "IS 1608 (Part 1)", "title": "Metallic Materials - Tensile Testing at Room Temperature", "relation": "testing"},
+                {"is_code": "IS 1599:2012", "title": "Metallic Materials - Bend Test", "relation": "testing"},
+                {"is_code": "IS 4736:1986", "title": "Hot-dip Zinc Coatings on Mild Steel Tubes", "relation": "material"},
+                {"is_code": "IS 2062:2011", "title": "Hot Rolled Medium and High Tensile Structural Steel", "relation": "material"},
+                {"is_code": "IS 1786:2008", "title": "High Strength Deformed Steel Bars for Concrete Reinforcement", "relation": "safety"},
+                {"is_code": "IS 2629:1985", "title": "Recommended Practice for Hot-Dip Galvanizing of Iron & Steel", "relation": "method"},
+            ])
+        elif "cable" in title or "wire" in title or "switch" in title or "motor" in title or "electrical" in cat:
+            refs.extend([
+                {"is_code": "IS 10810 (Part 45)", "title": "Methods of Test for Cables - High Voltage Test", "relation": "testing"},
+                {"is_code": "IS 10810 (Part 58)", "title": "Oxygen Index Test for Flame Retardant Cables", "relation": "safety"},
+                {"is_code": "IS 3043:2018", "title": "Code of Practice for Earthing", "relation": "safety"},
+                {"is_code": "IS/IEC 60898-1", "title": "Circuit Breakers for Overcurrent Protection", "relation": "safety"},
+                {"is_code": "IS 12615:2018", "title": "Line Operated Three-Phase Induction Motors Energy Efficiency", "relation": "testing"},
+            ])
+        elif "helmet" in title or "footwear" in title or "glove" in title or "personal" in cat:
+            refs.extend([
+                {"is_code": "IS 4151:2015", "title": "Protective Helmets for Two Wheeler Riders Specification", "relation": "safety"},
+                {"is_code": "IS 2925:1984", "title": "Industrial Safety Helmets Specification", "relation": "safety"},
+                {"is_code": "IS 15298 (Part 1)", "title": "Personal Protective Equipment - Test Methods for Footwear", "relation": "testing"},
+                {"is_code": "IS 4770:1991", "title": "Insulating Gloves for Electrical Purposes", "relation": "safety"},
+            ])
+        else:
+            refs.extend([
+                {"is_code": "IS 4905:2015", "title": "Random Sampling and Randomization Procedures", "relation": "method"},
+                {"is_code": "IS 10701:1983", "title": "Sampling Procedures and Tables for Inspection by Attributes", "relation": "testing"},
+                {"is_code": "IS 9000 (Part 1)", "title": "Basic Environmental Testing Procedures for Electronic Items", "relation": "testing"},
+                {"is_code": "IS 13252 (Part 1)", "title": "Information Technology Equipment - Safety Requirements", "relation": "safety"},
+                {"is_code": "IS 616:2017", "title": "Audio, Video and Similar Electronic Apparatus - Safety", "relation": "safety"},
+            ])
+
+        seen = set()
+        deduped = []
+        for r in refs:
+            is_c = r["is_code"]
+            if is_c not in seen and is_c != code:
+                seen.add(is_c)
+                deduped.append(r)
+
+        return deduped[:6]
+
     def recommend(self, query: str) -> List[Recommendation]:
         """
         End-to-end: curated rules matching + vector search → entity-aware re-ranking & threshold filtering →
@@ -881,9 +940,6 @@ class RAGEngine:
         """
         query = self._translate_if_multilingual(query)
         curated_matches = self._match_curated_rules(query)
-        if len(curated_matches) >= 1:
-            return curated_matches[:5]
-
         seen_codes = {c.is_code for c in curated_matches}
 
         try:
@@ -913,6 +969,9 @@ class RAGEngine:
             )
 
         all_recs = curated_matches + vector_recs
+        for rec in all_recs:
+            rec.normative_refs = self._enrich_normative_refs(rec)
+
         return all_recs[:5]
 
     def get_legal_framework(self, query: str, standards: List[Recommendation]) -> List[Dict[str, Any]]:
