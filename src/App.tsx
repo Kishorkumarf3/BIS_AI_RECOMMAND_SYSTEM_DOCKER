@@ -268,12 +268,29 @@ export default function App() {
               {recommendations.length > 0 ? (
                 <div className="space-y-4">
                   {recommendations.slice(0, 3).map((rec) => (
-                    <div key={rec.is_code}>
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="font-mono text-sm font-bold text-slate-900">{rec.is_code}</span>
-                        <span className="text-xs text-slate-500">{rec.title}</span>
+                    <div key={rec.is_code} className="rounded-xl border border-slate-200 bg-white p-4">
+                      <div className="flex items-center justify-between gap-2 mb-3">
+                        <div>
+                          <span className="font-mono text-sm font-bold text-slate-900">{rec.is_code}</span>
+                          <p className="text-xs text-slate-600">{rec.title}</p>
+                        </div>
+                        <span className="rounded-md bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-500">
+                          {rec.category}
+                        </span>
                       </div>
-                      <GraphWrapper rec={rec} />
+                      {rec.normative_refs && rec.normative_refs.length > 0 ? (
+                        <StandardsGraph standard={rec} />
+                      ) : (
+                        <div className="flex flex-col items-center justify-center py-8 text-center rounded-lg border border-dashed border-slate-200 bg-slate-50/50">
+                          <Network className="h-8 w-8 text-slate-300 mb-1" />
+                          <p className="text-xs font-medium text-slate-500">
+                            No mandatory normative reference standards required for {rec.is_code}
+                          </p>
+                          <p className="text-[11px] text-slate-400 mt-0.5">
+                            This standard operates as a standalone primary product specification.
+                          </p>
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
