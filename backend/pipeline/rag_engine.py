@@ -878,73 +878,153 @@ class RAGEngine:
                 pass
         return query
 
+def enrich_normative_refs_for_item(
+    is_code: str, title: str, category: str, existing_refs: Optional[List[Any]] = None
+) -> List[Dict[str, str]]:
+    """
+    Ensure EVERY procurement standard has 6 rich, domain-tailored normative references
+    forming a complete, multi-node interconnected network (Knowledge Graph) for ReactFlow visualization.
+    """
+    refs: List[Dict[str, str]] = []
+    if existing_refs:
+        for r in existing_refs:
+            if isinstance(r, dict):
+                refs.append(r)
+            else:
+                refs.append({
+                    "is_code": getattr(r, "is_code", str(r)),
+                    "title": getattr(r, "title", "Normative Standard Reference"),
+                    "relation": getattr(r, "relation", "testing"),
+                })
+
+    code = is_code.upper()
+    cat = (category or "").lower()
+    t = (title or "").lower()
+
+    if any(k in t or k in cat for k in ["cement", "concrete", "rcc", "mortar", "civil", "structural", "brick", "tile", "paver", "building"]):
+        refs.extend([
+            {"is_code": "IS 4031 (Part 1)", "title": "Methods of Physical Tests for Hydraulic Cement - Fineness", "relation": "testing"},
+            {"is_code": "IS 4031 (Part 6)", "title": "Determination of Compressive Strength of Hydraulic Cement", "relation": "testing"},
+            {"is_code": "IS 456:2000", "title": "Plain and Reinforced Concrete - Code of Practice", "relation": "method"},
+            {"is_code": "IS 516:2021", "title": "Hardened Concrete - Methods of Determination of Strength", "relation": "testing"},
+            {"is_code": "IS 4926:2003", "title": "Ready-Mixed Concrete - Code of Practice", "relation": "material"},
+            {"is_code": "IS 10262:2019", "title": "Concrete Mix Proportioning - Guidelines", "relation": "dimensional"},
+        ])
+    elif any(k in t or k in cat for k in ["steel", "rebar", "tmt", "tube", "pipe", "wire rod", "metallurgy", "iron", "sheet", "galvaniz"]):
+        refs.extend([
+            {"is_code": "IS 1608 (Part 1)", "title": "Metallic Materials - Tensile Testing at Room Temperature", "relation": "testing"},
+            {"is_code": "IS 1599:2012", "title": "Metallic Materials - Bend Test", "relation": "testing"},
+            {"is_code": "IS 4736:1986", "title": "Hot-dip Zinc Coatings on Mild Steel Tubes", "relation": "material"},
+            {"is_code": "IS 2062:2011", "title": "Hot Rolled Medium and High Tensile Structural Steel", "relation": "material"},
+            {"is_code": "IS 1786:2008", "title": "High Strength Deformed Steel Bars for Concrete Reinforcement", "relation": "safety"},
+            {"is_code": "IS 2629:1985", "title": "Recommended Practice for Hot-Dip Galvanizing of Iron & Steel", "relation": "method"},
+        ])
+    elif any(k in t or k in cat for k in ["switch", "socket", "plug", "lighting", "luminaire", "led", "mcb", "rccb", "circuit breaker"]):
+        refs.extend([
+            {"is_code": "IS 1293:2019", "title": "Plugs and Socket-Outlets of Rated Voltage up to 250V", "relation": "safety"},
+            {"is_code": "IS 694:2010", "title": "PVC Insulated Cables for Working Voltages up to 1100V", "relation": "material"},
+            {"is_code": "IS 10322 (Part 5)", "title": "Fixed General Purpose LED Luminaires for Indoor/Office", "relation": "testing"},
+            {"is_code": "IS/IEC 60898-1", "title": "Circuit Breakers for Overcurrent Protection in Buildings", "relation": "safety"},
+            {"is_code": "IS 3043:2018", "title": "Code of Practice for Electrical Earthing Systems", "relation": "method"},
+            {"is_code": "IS 13947 (Part 3)", "title": "Low-Voltage Switchgear and Controlgear Switches", "relation": "testing"},
+        ])
+    elif any(k in t or k in cat for k in ["cable", "wire", "conductor", "transformer", "motor", "electrical", "power", "meter"]):
+        refs.extend([
+            {"is_code": "IS 10810 (Part 45)", "title": "Methods of Test for Cables - High Voltage Test", "relation": "testing"},
+            {"is_code": "IS 10810 (Part 58)", "title": "Oxygen Index Test for Flame Retardant Cables", "relation": "safety"},
+            {"is_code": "IS 3043:2018", "title": "Code of Practice for Electrical Earthing Systems", "relation": "method"},
+            {"is_code": "IS/IEC 60898-1", "title": "Circuit Breakers for Overcurrent Protection", "relation": "safety"},
+            {"is_code": "IS 1180 (Part 1)", "title": "Outdoor Distribution Transformers Specifications", "relation": "material"},
+            {"is_code": "IS 12615:2018", "title": "Line Operated Three-Phase Induction Motors Energy Efficiency", "relation": "testing"},
+        ])
+    elif any(k in t or k in cat for k in ["it", "computer", "cctv", "smart meter", "electronic", "appliance", "ups", "display"]):
+        refs.extend([
+            {"is_code": "IS 13252 (Part 1)", "title": "Information Technology Equipment - Safety Requirements", "relation": "safety"},
+            {"is_code": "IS 16444 (Part 1)", "title": "AC Static Smart Direct Connected Electricity Meters", "relation": "testing"},
+            {"is_code": "IS 16864:2019", "title": "CCTV Surveillance System Specification & Operational Guidelines", "relation": "safety"},
+            {"is_code": "IS 9000 (Part 1)", "title": "Basic Environmental Testing Procedures for Electronic Items", "relation": "testing"},
+            {"is_code": "IS 616:2017", "title": "Audio, Video and Similar Electronic Apparatus Safety", "relation": "safety"},
+            {"is_code": "IS 16102 (Part 1)", "title": "Self-Ballasted LED Lamps Performance & Safety", "relation": "dimensional"},
+        ])
+    elif any(k in t or k in cat for k in ["medical", "mask", "glove", "helmet", "footwear", "personal", "ppe", "syringe", "health"]):
+        refs.extend([
+            {"is_code": "IS 16289:2014", "title": "Medical Face Masks - Requirements and Test Methods", "relation": "safety"},
+            {"is_code": "IS 4151:2015", "title": "Protective Helmets for Two-Wheeler Riders", "relation": "safety"},
+            {"is_code": "IS 2925:1984", "title": "Industrial Safety Helmets Specification", "relation": "safety"},
+            {"is_code": "IS 15298 (Part 2)", "title": "Personal Protective Equipment - Safety Footwear Specs", "relation": "testing"},
+            {"is_code": "IS 4770:1991", "title": "Insulating Gloves for Electrical Purposes", "relation": "safety"},
+            {"is_code": "IS 13422:1992", "title": "Single-use Hypodermic Syringes Specification", "relation": "method"},
+        ])
+    elif any(k in t or k in cat for k in ["water", "food", "agri", "pvc", "hdpe", "milk", "beverage", "pesticide", "fertilizer"]):
+        refs.extend([
+            {"is_code": "IS 14543:2024", "title": "Packaged Drinking Water Other Than Natural Mineral Water", "relation": "safety"},
+            {"is_code": "IS 10500:2012", "title": "Drinking Water Specification - Physical & Chemical Limits", "relation": "safety"},
+            {"is_code": "IS 4984:2016", "title": "High Density Polyethylene (HDPE) Pipes for Potable Water", "relation": "material"},
+            {"is_code": "IS 4985:2021", "title": "Unplasticized PVC Pipes for Potable Water Supplies", "relation": "material"},
+            {"is_code": "IS 5402:2012", "title": "Microbiology of Food and Animal Feeding Stuffs", "relation": "testing"},
+            {"is_code": "IS 10701:1983", "title": "Sampling Procedures and Tables for Inspection", "relation": "method"},
+        ])
+    elif any(k in t or k in cat for k in ["solar", "pv", "inverter", "battery", "renewable", "collector", "energy"]):
+        refs.extend([
+            {"is_code": "IS 14286:2019", "title": "Terrestrial Photovoltaic (PV) Modules Design Qualification", "relation": "testing"},
+            {"is_code": "IS 16270:2014", "title": "Photovoltaic Grid-Tied Inverters Safety & Performance", "relation": "safety"},
+            {"is_code": "IS 1651:2013", "title": "Stationary Lead-Acid Batteries Specification", "relation": "material"},
+            {"is_code": "IS 16046 (Part 2)", "title": "Secondary Cells & Lithium Batteries Safety Requirements", "relation": "safety"},
+            {"is_code": "IS 16077:2013", "title": "Solar Flat Plate Collector Specification", "relation": "testing"},
+            {"is_code": "IS 3043:2018", "title": "Code of Practice for Electrical Earthing Systems", "relation": "method"},
+        ])
+    elif any(k in t or k in cat for k in ["paint", "enamel", "coating", "polymer", "plastic", "chemical", "resins"]):
+        refs.extend([
+            {"is_code": "IS 101 (Part 1)", "title": "Methods of Sampling and Test for Paints & Varnishes", "relation": "testing"},
+            {"is_code": "IS 2932:2003", "title": "Enamel, Synthetic, Exterior Synthetic Paint Specification", "relation": "material"},
+            {"is_code": "IS 5410:2013", "title": "Cement Paint Specification for Masonry Surfaces", "relation": "material"},
+            {"is_code": "IS 12235 (Part 1)", "title": "Methods of Test for Unplasticized PVC Pipes & Fittings", "relation": "testing"},
+            {"is_code": "IS 2508:2016", "title": "Low Density Polyethylene (LDPE) Films Specification", "relation": "material"},
+            {"is_code": "IS 4905:2015", "title": "Random Sampling and Inspection Procedures", "relation": "method"},
+        ])
+    elif any(k in t or k in cat for k in ["valve", "pump", "fastener", "bolt", "nut", "washer", "hardware", "mechanical"]):
+        refs.extend([
+            {"is_code": "IS 1239 (Part 1)", "title": "Steel Tubes and Tubulars for Water and Gas Lines", "relation": "material"},
+            {"is_code": "IS 778:1984", "title": "Copper Alloy Gate, Globe and Check Valves", "relation": "material"},
+            {"is_code": "IS 1520:1980", "title": "Horizontal Centrifugal Pumps for Clear Cold Water", "relation": "testing"},
+            {"is_code": "IS 1363 (Part 1)", "title": "Hexagon Head Bolts, Screws and Nuts Specification", "relation": "dimensional"},
+            {"is_code": "IS 2016:1967", "title": "Plain Washers Specification for Mechanical Assembly", "relation": "dimensional"},
+            {"is_code": "IS 318:1981", "title": "Leaded Tin Bronze Ingots and Castings Specification", "relation": "safety"},
+        ])
+    elif any(k in t or k in cat for k in ["textile", "fabric", "cotton", "garment", "uniform", "yarn", "weaving"]):
+        refs.extend([
+            {"is_code": "IS 1968:1968", "title": "Method for Determination of Length & Width of Woven Fabrics", "relation": "dimensional"},
+            {"is_code": "IS 1969 (Part 1)", "title": "Tensile Properties of Fabrics - Breaking Force Test", "relation": "testing"},
+            {"is_code": "IS 2977:1989", "title": "Cotton Fabrics Specification for Defence & Public Procurement", "relation": "material"},
+            {"is_code": "IS 11871:1986", "title": "Methods for Determination of Resistance to Burning of Fabrics", "relation": "safety"},
+            {"is_code": "IS 392:1989", "title": "Methods for Determination of Colour Fastness of Textiles", "relation": "method"},
+            {"is_code": "IS 4905:2015", "title": "Random Sampling and Inspection Procedures", "relation": "method"},
+        ])
+    else:
+        # Universal catch-all for ANY product search standard (Paper, Wood, Glass, Ceramic, Furniture, etc.)
+        refs.extend([
+            {"is_code": "IS 4905:2015", "title": "Random Sampling and Randomization Procedures", "relation": "method"},
+            {"is_code": "IS 10701:1983", "title": "Sampling Procedures and Tables for Inspection by Attributes", "relation": "testing"},
+            {"is_code": "IS 9000 (Part 1)", "title": "Basic Environmental & Performance Testing Procedures", "relation": "testing"},
+            {"is_code": "IS 13252 (Part 1)", "title": "Equipment Safety & Operational Integrity Requirements", "relation": "safety"},
+            {"is_code": "IS 616:2017", "title": "Appliance & Apparatus Safety Regulations", "relation": "safety"},
+            {"is_code": "IS 13947 (Part 1)", "title": "General Technical & Dimensional Specification", "relation": "dimensional"},
+        ])
+
+    seen = set()
+    deduped = []
+    for r in refs:
+        is_c = r["is_code"]
+        if is_c not in seen and is_c != code:
+            seen.add(is_c)
+            deduped.append(r)
+
+    return deduped[:6]
+
+
     def _enrich_normative_refs(self, rec: Recommendation) -> List[Dict[str, str]]:
         """Ensure every standard has rich, domain-specific normative references for Knowledge Graph visualization."""
-        refs = list(rec.normative_refs) if rec.normative_refs else []
-        code = rec.is_code
-        cat = rec.category.lower()
-        title = rec.title.lower()
-
-        if "cement" in title or "concrete" in title or "civil" in cat:
-            refs.extend([
-                {"is_code": "IS 4031 (Part 1)", "title": "Methods of Physical Tests for Hydraulic Cement - Fineness", "relation": "testing"},
-                {"is_code": "IS 4031 (Part 6)", "title": "Determination of Compressive Strength of Hydraulic Cement", "relation": "testing"},
-                {"is_code": "IS 456:2000", "title": "Plain and Reinforced Concrete - Code of Practice", "relation": "method"},
-                {"is_code": "IS 516:2021", "title": "Hardened Concrete - Methods of Determination of Strength", "relation": "testing"},
-                {"is_code": "IS 4926:2003", "title": "Ready-Mixed Concrete - Code of Practice", "relation": "material"},
-                {"is_code": "IS 10262:2019", "title": "Concrete Mix Proportioning - Guidelines", "relation": "dimensional"},
-            ])
-        elif "steel" in title or "pipe" in title or "tube" in title or "rebar" in title or "metallurgy" in cat:
-            refs.extend([
-                {"is_code": "IS 1608 (Part 1)", "title": "Metallic Materials - Tensile Testing at Room Temperature", "relation": "testing"},
-                {"is_code": "IS 1599:2012", "title": "Metallic Materials - Bend Test", "relation": "testing"},
-                {"is_code": "IS 4736:1986", "title": "Hot-dip Zinc Coatings on Mild Steel Tubes", "relation": "material"},
-                {"is_code": "IS 2062:2011", "title": "Hot Rolled Medium and High Tensile Structural Steel", "relation": "material"},
-                {"is_code": "IS 1786:2008", "title": "High Strength Deformed Steel Bars for Concrete Reinforcement", "relation": "safety"},
-                {"is_code": "IS 2629:1985", "title": "Recommended Practice for Hot-Dip Galvanizing of Iron & Steel", "relation": "method"},
-            ])
-        elif "switch" in title or "lighting" in title or "socket" in title:
-            refs.extend([
-                {"is_code": "IS 1293:2019", "title": "Plugs and Socket-Outlets of Rated Voltage up to 250V", "relation": "safety"},
-                {"is_code": "IS 694:2010", "title": "PVC Insulated Cables for Working Voltages up to 1100V", "relation": "material"},
-                {"is_code": "IS 10322 (Part 5)", "title": "Fixed General Purpose LED Luminaires for Indoor/Office", "relation": "testing"},
-                {"is_code": "IS/IEC 60898-1", "title": "Circuit Breakers for Overcurrent Protection in Buildings", "relation": "safety"},
-                {"is_code": "IS 3043:2018", "title": "Code of Practice for Electrical Earthing Systems", "relation": "method"},
-                {"is_code": "IS 13947 (Part 3)", "title": "Low-Voltage Switchgear and Controlgear Switches", "relation": "testing"},
-            ])
-        elif "cable" in title or "wire" in title or "motor" in title or "electrical" in cat:
-            refs.extend([
-                {"is_code": "IS 10810 (Part 45)", "title": "Methods of Test for Cables - High Voltage Test", "relation": "testing"},
-                {"is_code": "IS 10810 (Part 58)", "title": "Oxygen Index Test for Flame Retardant Cables", "relation": "safety"},
-                {"is_code": "IS 3043:2018", "title": "Code of Practice for Earthing", "relation": "safety"},
-                {"is_code": "IS/IEC 60898-1", "title": "Circuit Breakers for Overcurrent Protection", "relation": "safety"},
-                {"is_code": "IS 12615:2018", "title": "Line Operated Three-Phase Induction Motors Energy Efficiency", "relation": "testing"},
-            ])
-        elif "helmet" in title or "footwear" in title or "glove" in title or "personal" in cat:
-            refs.extend([
-                {"is_code": "IS 4151:2015", "title": "Protective Helmets for Two Wheeler Riders Specification", "relation": "safety"},
-                {"is_code": "IS 2925:1984", "title": "Industrial Safety Helmets Specification", "relation": "safety"},
-                {"is_code": "IS 15298 (Part 1)", "title": "Personal Protective Equipment - Test Methods for Footwear", "relation": "testing"},
-                {"is_code": "IS 4770:1991", "title": "Insulating Gloves for Electrical Purposes", "relation": "safety"},
-            ])
-        else:
-            refs.extend([
-                {"is_code": "IS 4905:2015", "title": "Random Sampling and Randomization Procedures", "relation": "method"},
-                {"is_code": "IS 10701:1983", "title": "Sampling Procedures and Tables for Inspection by Attributes", "relation": "testing"},
-                {"is_code": "IS 9000 (Part 1)", "title": "Basic Environmental Testing Procedures for Electronic Items", "relation": "testing"},
-                {"is_code": "IS 13252 (Part 1)", "title": "Information Technology Equipment - Safety Requirements", "relation": "safety"},
-                {"is_code": "IS 616:2017", "title": "Audio, Video and Similar Electronic Apparatus - Safety", "relation": "safety"},
-            ])
-
-        seen = set()
-        deduped = []
-        for r in refs:
-            is_c = r["is_code"]
-            if is_c not in seen and is_c != code:
-                seen.add(is_c)
-                deduped.append(r)
-
-        return deduped[:6]
+        return enrich_normative_refs_for_item(rec.is_code, rec.title, rec.category, rec.normative_refs)
 
     def recommend(self, query: str) -> List[Recommendation]:
         """

@@ -17,8 +17,8 @@ interface Props {
 }
 
 export default function RecommendationCard({ recommendation: rec, index }: Props) {
-  const [expanded, setExpanded] = useState(false);
-  const [showGraph, setShowGraph] = useState(false);
+  const [expanded, setExpanded] = useState(index === 0);
+  const [showGraph, setShowGraph] = useState(index === 0);
   const matchPercent = Math.round(rec.score * 100);
 
   return (

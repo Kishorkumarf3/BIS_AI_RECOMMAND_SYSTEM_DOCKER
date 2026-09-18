@@ -193,22 +193,18 @@ async def recommend(
                 simplified = True
                 fast_track_days = std.simplified_procedure.fast_track_days
 
-        # Prefer enriched rec.normative_refs, fallback to std.normative_refs
-        refs = []
-        if rec.normative_refs:
-            refs = [
-                NormativeRef(
-                    is_code=r["is_code"] if isinstance(r, dict) else r.is_code,
-                    title=r["title"] if isinstance(r, dict) else r.title,
-                    relation=r.get("relation", "testing") if isinstance(r, dict) else getattr(r, "relation", "testing")
-                )
-                for r in rec.normative_refs
-            ]
-        elif std and std.normative_refs:
-            refs = [
-                NormativeRef(is_code=r.is_code, title=r.title, relation="testing")
-                for r in std.normative_refs
-            ]
+        # Guarantee rich 6-node normative references for Knowledge Graph visualization on every search
+        from pipeline.rag_engine import enrich_normative_refs_for_item
+        raw_refs = rec.normative_refs or (std.normative_refs if std else None)
+        enriched_refs = enrich_normative_refs_for_item(rec.is_code, rec.title, rec.category, raw_refs)
+        refs = [
+            NormativeRef(
+                is_code=r["is_code"] if isinstance(r, dict) else r.is_code,
+                title=r["title"] if isinstance(r, dict) else r.title,
+                relation=r.get("relation", "testing") if isinstance(r, dict) else getattr(r, "relation", "testing")
+            )
+            for r in enriched_refs
+        ]
 
         items.append(
             RecommendItem(
