@@ -228,6 +228,8 @@ async def recommend(
                 clause = rag.synthesize_compliance_clause(req.query, recs[: req.top_k])
             except Exception:
                 pass
+            if not clause:
+                clause = rag._fallback_clause(req.query, recs[: req.top_k])
         if not clause:
             std_codes = ", ".join([it.is_code for it in items[:3]])
             clause = (

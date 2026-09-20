@@ -152,6 +152,147 @@ class Recommendation:
     normative_refs: List[Dict[str, str]]
 
 
+def enrich_normative_refs_for_item(
+    is_code: str, title: str, category: str, existing_refs: Optional[List[Any]] = None
+) -> List[Dict[str, str]]:
+    """
+    Return ONLY authentic, normatively linked Indian Standards for the given product standard.
+    Do NOT inject unrelated or artificial standards (e.g. helmets on gloves, or IT meters on furniture).
+    If no normative references exist, return an empty list.
+    """
+    refs: List[Dict[str, str]] = []
+    if existing_refs:
+        for r in existing_refs:
+            if isinstance(r, dict):
+                is_c = r.get("is_code", "")
+                t_val = r.get("title", "")
+                rel_val = r.get("relation", "testing")
+            else:
+                is_c = getattr(r, "is_code", str(r))
+                t_val = getattr(r, "title", "Normative Standard Reference")
+                rel_val = getattr(r, "relation", "testing")
+            if is_c:
+                refs.append({"is_code": is_c, "title": t_val, "relation": rel_val})
+
+    code = is_code.upper()
+
+    CURATED_MAP = {
+        # Civil & Construction
+        "IS 1786": [
+            {"is_code": "IS 456:2000", "title": "Plain and Reinforced Concrete - Code of Practice", "relation": "testing"},
+            {"is_code": "IS 2830", "title": "Carbon Steel Cast Billet Ingots & Blooms for Re-Rolling", "relation": "testing"},
+            {"is_code": "IS 1608", "title": "Metallic Materials - Tensile Testing at Ambient Temperature", "relation": "testing"},
+            {"is_code": "IS 1599", "title": "Metallic Materials - Bend Test", "relation": "testing"},
+            {"is_code": "IS 228", "title": "Methods of Chemical Analysis of Steels", "relation": "testing"},
+        ],
+        "IS 456": [
+            {"is_code": "IS 269:2015", "title": "Ordinary Portland Cement Specification", "relation": "testing"},
+            {"is_code": "IS 383:2016", "title": "Coarse and Fine Aggregates for Concrete", "relation": "testing"},
+            {"is_code": "IS 516", "title": "Hardened Concrete - Methods of Testing Strength", "relation": "testing"},
+            {"is_code": "IS 1199", "title": "Fresh Concrete - Sampling, Testing and Analysis", "relation": "testing"},
+            {"is_code": "IS 9103", "title": "Concrete Admixtures - Specification", "relation": "method"},
+        ],
+        "IS 269": [
+            {"is_code": "IS 4031 (Part 1)", "title": "Physical Tests for Cement - Fineness by Blaine", "relation": "testing"},
+            {"is_code": "IS 4031 (Part 6)", "title": "Physical Tests for Cement - Compressive Strength", "relation": "testing"},
+            {"is_code": "IS 4032", "title": "Methods of Chemical Analysis of Hydraulic Cement", "relation": "testing"},
+            {"is_code": "IS 3535", "title": "Methods of Sampling for Hydraulic Cements", "relation": "method"},
+        ],
+        "IS 1489": [
+            {"is_code": "IS 4031 (Part 6)", "title": "Compressive Strength of Cement", "relation": "testing"},
+            {"is_code": "IS 1727", "title": "Methods of Test for Pozzolanic Materials", "relation": "testing"},
+            {"is_code": "IS 4032", "title": "Chemical Analysis of Cement", "relation": "testing"},
+        ],
+        "IS 455": [
+            {"is_code": "IS 4031 (Part 6)", "title": "Compressive Strength of Slag Cement", "relation": "testing"},
+            {"is_code": "IS 12089", "title": "Granulated Slag for Manufacture of Portland Slag Cement", "relation": "testing"},
+        ],
+        "IS 1239": [
+            {"is_code": "IS 1387", "title": "General Requirements for Supply of Steel Products", "relation": "testing"},
+            {"is_code": "IS 4736", "title": "Hot-Dip Zinc Coatings on Mild Steel Tubes", "relation": "testing"},
+            {"is_code": "IS 2629", "title": "Recommended Practice for Hot-Dip Galvanizing of Iron & Steel", "relation": "method"},
+        ],
+        "IS 2062": [
+            {"is_code": "IS 800:2007", "title": "Code of Practice for General Construction in Steel", "relation": "method"},
+            {"is_code": "IS 1599", "title": "Bend Test for Metallic Materials", "relation": "testing"},
+            {"is_code": "IS 1608", "title": "Tensile Testing of Metallic Materials", "relation": "testing"},
+        ],
+        "IS 4984": [
+            {"is_code": "IS 2530", "title": "Methods of Test for Polyethylene Moulding Materials", "relation": "testing"},
+            {"is_code": "IS 7328", "title": "High Density Polyethylene Materials for Moulding & Extrusion", "relation": "testing"},
+            {"is_code": "IS 12235", "title": "Methods of Test for Unplasticized PVC Pipes", "relation": "testing"},
+        ],
+        "IS 4985": [
+            {"is_code": "IS 12235 (Part 1)", "title": "Measurement of Dimensions of UPVC Pipes", "relation": "testing"},
+            {"is_code": "IS 12235 (Part 3)", "title": "Test for Hydrostatic Internal Pressure", "relation": "testing"},
+            {"is_code": "IS 10151", "title": "Polyvinyl Chloride (PVC) for Contact with Foodstuffs", "relation": "safety"},
+        ],
+        "IS 303": [
+            {"is_code": "IS 1734", "title": "Methods of Test for Plywood", "relation": "testing"},
+            {"is_code": "IS 848", "title": "Synthetic Resin Adhesives for Plywood", "relation": "testing"},
+        ],
+        "IS 710": [
+            {"is_code": "IS 1734 (Part 1)", "title": "Determination of Density & Moisture Content of Plywood", "relation": "testing"},
+            {"is_code": "IS 1734 (Part 6)", "title": "Water Resistance Test for Marine Plywood", "relation": "testing"},
+        ],
+        # Electrical & Electronics
+        "IS 694": [
+            {"is_code": "IS 5831", "title": "PVC Insulation and Sheath of Electric Cables", "relation": "safety"},
+            {"is_code": "IS 8130", "title": "Conductors for Insulated Electric Cables and Flexible Cords", "relation": "testing"},
+            {"is_code": "IS 10810 (Part 5)", "title": "Conductor Resistance Test for Electric Cables", "relation": "testing"},
+            {"is_code": "IS 10810 (Part 45)", "title": "High Voltage Test on Insulated Cables", "relation": "testing"},
+        ],
+        "IS 7098": [
+            {"is_code": "IS 8130", "title": "Conductors for Insulated Electric Cables", "relation": "testing"},
+            {"is_code": "IS 10418", "title": "Drums for Electric Cables Specification", "relation": "method"},
+            {"is_code": "IS 10810 (Part 55)", "title": "XLPE Insulation Thermal Ageing Test", "relation": "testing"},
+        ],
+        "IS 16102": [
+            {"is_code": "IS 16101", "title": "General Lighting - LEDs and LED Modules Terms & Definitions", "relation": "method"},
+            {"is_code": "IS 16103 (Part 1)", "title": "Led Modules for General Lighting Safety Specifications", "relation": "safety"},
+            {"is_code": "IS 15885 (Part 2/Sec 13)", "title": "Safety of AC/DC Supplied Electronic Controlgear for LED", "relation": "safety"},
+            {"is_code": "IS 6873 (Part 5)", "title": "Limits & Methods of Measurement of Radio Disturbance (EMC)", "relation": "testing"},
+        ],
+        "IS 1293": [
+            {"is_code": "IS 302 (Part 1)", "title": "Safety of Household and Similar Electrical Appliances", "relation": "safety"},
+            {"is_code": "IS 1400", "title": "Plugs and Socket-Outlets Rated Voltage Test", "relation": "testing"},
+        ],
+        "IS 60898": [
+            {"is_code": "IS 13947 (Part 1)", "title": "Low-Voltage Switchgear and Controlgear - General Rules", "relation": "testing"},
+            {"is_code": "IS 8623", "title": "Specification for Low-Voltage Switchgear Assemblies", "relation": "testing"},
+        ],
+        "IS 1180": [
+            {"is_code": "IS 2026 (Part 1)", "title": "Power Transformers - General Specifications", "relation": "testing"},
+            {"is_code": "IS 335", "title": "New Insulating Oils Specification", "relation": "testing"},
+            {"is_code": "IS 3043:2018", "title": "Code of Practice for Electrical Earthing", "relation": "method"},
+        ],
+        # Water & Pipes
+        "IS 14543": [
+            {"is_code": "IS 10500:2012", "title": "Drinking Water Specification - Physical & Chemical Limits", "relation": "safety"},
+            {"is_code": "IS 5402:2012", "title": "Microbiology of Food and Animal Feeding Stuffs", "relation": "testing"},
+        ],
+        "IS 10500": [
+            {"is_code": "IS 14543:2024", "title": "Packaged Drinking Water Specification", "relation": "safety"},
+            {"is_code": "IS 3025", "title": "Methods of Sampling & Test for Water and Waste Water", "relation": "testing"},
+        ],
+    }
+
+    for key, items in CURATED_MAP.items():
+        if key in code or code in key:
+            refs.extend(items)
+            break
+
+    seen = set()
+    deduped = []
+    for r in refs:
+        is_c = r["is_code"]
+        if is_c not in seen and is_c.upper() != code:
+            seen.add(is_c)
+            deduped.append(r)
+
+    return deduped
+
+
 class RAGEngine:
     """Orchestrates embeddings, vector retrieval, curated rules matching, and LLM synthesis."""
 
@@ -878,216 +1019,9 @@ class RAGEngine:
                 pass
         return query
 
-def enrich_normative_refs_for_item(
-    is_code: str, title: str, category: str, existing_refs: Optional[List[Any]] = None
-) -> List[Dict[str, str]]:
-    """
-    Return ONLY authentic, normatively linked Indian Standards for the given product standard.
-    Do NOT inject unrelated or artificial standards (e.g. helmets on gloves, or IT meters on furniture).
-    If no normative references exist, return an empty list.
-    """
-    refs: List[Dict[str, str]] = []
-    if existing_refs:
-        for r in existing_refs:
-            if isinstance(r, dict):
-                is_c = r.get("is_code", "")
-                t_val = r.get("title", "")
-                rel_val = r.get("relation", "testing")
-            else:
-                is_c = getattr(r, "is_code", str(r))
-                t_val = getattr(r, "title", "Normative Standard Reference")
-                rel_val = getattr(r, "relation", "testing")
-            if is_c:
-                refs.append({"is_code": is_c, "title": t_val, "relation": rel_val})
-
-    code = is_code.upper()
-
-    # Domain-authentic normative reference relationships
-    CURATED_MAP = {
-        # Surgical Rubber Gloves & Medical Rubber
-        "IS 13422": [
-            {"is_code": "IS 4114", "title": "Surgical Rubber Gloves - Specification", "relation": "testing"},
-            {"is_code": "IS 15354 (Part 1)", "title": "Single-use Rubber Examination Gloves Specification", "relation": "material"},
-            {"is_code": "IS 3400 (Part 1)", "title": "Methods of Test for Vulcanized Rubber - Tensile Stress-Strain", "relation": "testing"},
-        ],
-        "IS 15354": [
-            {"is_code": "IS 13422", "title": "Disposable Surgical Rubber Gloves Specification", "relation": "material"},
-            {"is_code": "IS 3400 (Part 1)", "title": "Methods of Test for Vulcanized Rubber - Tensile Stress-Strain", "relation": "testing"},
-        ],
-        "IS 16289": [
-            {"is_code": "IS 9000 (Part 1)", "title": "Basic Environmental Testing Procedures", "relation": "testing"},
-            {"is_code": "IS 16289:2014", "title": "Medical Face Masks - Bacterial Filtration Efficiency Test", "relation": "safety"},
-        ],
-        "IS 4770": [
-            {"is_code": "IS 13774", "title": "Rubber Insulating Gloves for Electrical Live Working", "relation": "safety"},
-            {"is_code": "IS 3400 (Part 1)", "title": "Methods of Test for Vulcanized Rubber", "relation": "testing"},
-        ],
-        # Helmets & Personal Protective Equipment
-        "IS 4151": [
-            {"is_code": "IS 2925:1984", "title": "Industrial Safety Helmets Specification", "relation": "safety"},
-        ],
-        "IS 2925": [
-            {"is_code": "IS 4151:2015", "title": "Protective Helmets for Two-Wheeler Riders", "relation": "safety"},
-        ],
-        "IS 15298": [
-            {"is_code": "IS 15298 (Part 1)", "title": "Personal Protective Equipment - Test Methods for Footwear", "relation": "testing"},
-        ],
-        # Hospital Furniture
-        "IS 4037": [
-            {"is_code": "IS 2062:2011", "title": "Hot Rolled Medium and High Tensile Structural Steel", "relation": "material"},
-            {"is_code": "IS 1363 (Part 1)", "title": "Hexagon Head Bolts, Screws and Nuts Specification", "relation": "dimensional"},
-        ],
-        "IS 503": [
-            {"is_code": "IS 2062:2011", "title": "Hot Rolled Medium and High Tensile Structural Steel", "relation": "material"},
-        ],
-        "IS 504": [
-            {"is_code": "IS 2062:2011", "title": "Hot Rolled Medium and High Tensile Structural Steel", "relation": "material"},
-        ],
-        "IS 13488": [
-            {"is_code": "IS 2062:2011", "title": "Hot Rolled Medium and High Tensile Structural Steel", "relation": "material"},
-            {"is_code": "IS 1363 (Part 1)", "title": "Hexagon Head Bolts, Screws and Nuts Specification", "relation": "dimensional"},
-        ],
-        "IS 7378": [
-            {"is_code": "IS 2062:2011", "title": "Hot Rolled Medium and High Tensile Structural Steel", "relation": "material"},
-            {"is_code": "IS 1363 (Part 1)", "title": "Hexagon Head Bolts, Screws and Nuts Specification", "relation": "dimensional"},
-        ],
-        "IS 4036": [
-            {"is_code": "IS 2062:2011", "title": "Hot Rolled Medium and High Tensile Structural Steel", "relation": "material"},
-        ],
-        "IS 7454": [
-            {"is_code": "IS 2062:2011", "title": "Hot Rolled Medium and High Tensile Structural Steel", "relation": "material"},
-        ],
-        "IS 12993": [
-            {"is_code": "IS 2062:2011", "title": "Hot Rolled Medium and High Tensile Structural Steel", "relation": "material"},
-            {"is_code": "IS 1363 (Part 1)", "title": "Hexagon Head Bolts, Screws and Nuts Specification", "relation": "dimensional"},
-        ],
-        # Cement & Concrete
-        "IS 269": [
-            {"is_code": "IS 4031 (Part 1)", "title": "Physical Tests for Hydraulic Cement - Fineness", "relation": "testing"},
-            {"is_code": "IS 4031 (Part 6)", "title": "Compressive Strength of Hydraulic Cement", "relation": "testing"},
-            {"is_code": "IS 456:2000", "title": "Plain and Reinforced Concrete - Code of Practice", "relation": "method"},
-            {"is_code": "IS 516:2021", "title": "Hardened Concrete Strength Determination", "relation": "testing"},
-        ],
-        "IS 8112": [
-            {"is_code": "IS 4031 (Part 1)", "title": "Physical Tests for Hydraulic Cement - Fineness", "relation": "testing"},
-            {"is_code": "IS 4031 (Part 6)", "title": "Compressive Strength of Hydraulic Cement", "relation": "testing"},
-            {"is_code": "IS 456:2000", "title": "Plain and Reinforced Concrete - Code of Practice", "relation": "method"},
-            {"is_code": "IS 516:2021", "title": "Hardened Concrete Strength Determination", "relation": "testing"},
-        ],
-        "IS 12269": [
-            {"is_code": "IS 4031 (Part 1)", "title": "Physical Tests for Hydraulic Cement - Fineness", "relation": "testing"},
-            {"is_code": "IS 4031 (Part 6)", "title": "Compressive Strength of Hydraulic Cement", "relation": "testing"},
-            {"is_code": "IS 456:2000", "title": "Plain and Reinforced Concrete - Code of Practice", "relation": "method"},
-            {"is_code": "IS 516:2021", "title": "Hardened Concrete Strength Determination", "relation": "testing"},
-        ],
-        "IS 1489": [
-            {"is_code": "IS 4031 (Part 1)", "title": "Physical Tests for Hydraulic Cement - Fineness", "relation": "testing"},
-            {"is_code": "IS 4031 (Part 6)", "title": "Compressive Strength of Hydraulic Cement", "relation": "testing"},
-            {"is_code": "IS 456:2000", "title": "Plain and Reinforced Concrete - Code of Practice", "relation": "method"},
-            {"is_code": "IS 516:2021", "title": "Hardened Concrete Strength Determination", "relation": "testing"},
-        ],
-        "IS 456": [
-            {"is_code": "IS 269:2015", "title": "Ordinary Portland Cement 33 Grade Specification", "relation": "material"},
-            {"is_code": "IS 1786:2008", "title": "High Strength Deformed Steel Bars for Concrete", "relation": "material"},
-            {"is_code": "IS 383:2016", "title": "Coarse and Fine Aggregates for Concrete Specification", "relation": "material"},
-        ],
-        # Steel & Structural Metallurgy
-        "IS 1786": [
-            {"is_code": "IS 1608 (Part 1)", "title": "Metallic Materials - Tensile Testing", "relation": "testing"},
-            {"is_code": "IS 1599:2012", "title": "Metallic Materials - Bend Test", "relation": "testing"},
-            {"is_code": "IS 2062:2011", "title": "Hot Rolled Medium & High Tensile Structural Steel", "relation": "material"},
-        ],
-        "IS 2062": [
-            {"is_code": "IS 1608 (Part 1)", "title": "Metallic Materials - Tensile Testing", "relation": "testing"},
-            {"is_code": "IS 1599:2012", "title": "Metallic Materials - Bend Test", "relation": "testing"},
-            {"is_code": "IS 2629:1985", "title": "Hot-Dip Galvanizing Practices", "relation": "method"},
-        ],
-        "IS 1239": [
-            {"is_code": "IS 4736:1986", "title": "Hot-dip Zinc Coatings on Mild Steel Tubes", "relation": "material"},
-            {"is_code": "IS 1608 (Part 1)", "title": "Metallic Materials - Tensile Testing", "relation": "testing"},
-        ],
-        # Electrical Wires & Switches
-        "IS 3854": [
-            {"is_code": "IS 1293:2019", "title": "Plugs and Socket-Outlets up to 250V", "relation": "safety"},
-            {"is_code": "IS 694:2010", "title": "PVC Insulated Cables for Working Voltages up to 1100V", "relation": "material"},
-            {"is_code": "IS 13947 (Part 3)", "title": "Low-Voltage Switchgear and Controlgear Switches", "relation": "testing"},
-        ],
-        "IS 1293": [
-            {"is_code": "IS 3854:1997", "title": "Switches for Domestic and Similar Purposes", "relation": "safety"},
-            {"is_code": "IS 694:2010", "title": "PVC Insulated Cables for Voltages up to 1100V", "relation": "material"},
-        ],
-        "IS 694": [
-            {"is_code": "IS 10810 (Part 45)", "title": "Methods of Test for Cables - High Voltage Test", "relation": "testing"},
-            {"is_code": "IS 10810 (Part 58)", "title": "Oxygen Index Test for Flame Retardant Cables", "relation": "safety"},
-            {"is_code": "IS 3043:2018", "title": "Code of Practice for Electrical Earthing", "relation": "method"},
-        ],
-        "IS/IEC 60898-1": [
-            {"is_code": "IS 3043:2018", "title": "Code of Practice for Electrical Earthing Systems", "relation": "method"},
-            {"is_code": "IS 13947 (Part 2)", "title": "Low-Voltage Switchgear - Circuit Breakers", "relation": "safety"},
-        ],
-        "IS 1180": [
-            {"is_code": "IS 2026", "title": "Power Transformers Specification", "relation": "material"},
-            {"is_code": "IS 335", "title": "New Insulating Oils Specification", "relation": "testing"},
-            {"is_code": "IS 3043:2018", "title": "Code of Practice for Electrical Earthing", "relation": "method"},
-        ],
-        # Water & Pipes
-        "IS 14543": [
-            {"is_code": "IS 10500:2012", "title": "Drinking Water Specification - Physical & Chemical Limits", "relation": "safety"},
-            {"is_code": "IS 5402:2012", "title": "Microbiology of Food and Animal Feeding Stuffs", "relation": "testing"},
-        ],
-        "IS 10500": [
-            {"is_code": "IS 14543:2024", "title": "Packaged Drinking Water Specification", "relation": "safety"},
-            {"is_code": "IS 3025", "title": "Methods of Sampling & Test for Water and Waste Water", "relation": "testing"},
-        ],
-        "IS 4984": [
-            {"is_code": "IS 4985:2021", "title": "Unplasticized PVC Pipes for Potable Water Supplies", "relation": "material"},
-            {"is_code": "IS 12235 (Part 1)", "title": "Methods of Test for Thermoplastic Pipes", "relation": "testing"},
-        ],
-        "IS 4985": [
-            {"is_code": "IS 4984:2016", "title": "High Density Polyethylene (HDPE) Pipes for Potable Water", "relation": "material"},
-            {"is_code": "IS 12235 (Part 1)", "title": "Methods of Test for Unplasticized PVC Pipes", "relation": "testing"},
-        ],
-        # Solar
-        "IS 14286": [
-            {"is_code": "IS 16270:2014", "title": "Photovoltaic Grid-Tied Inverters Safety & Performance", "relation": "safety"},
-            {"is_code": "IS 16046 (Part 2)", "title": "Secondary Cells & Lithium Batteries Safety Requirements", "relation": "safety"},
-            {"is_code": "IS 3043:2018", "title": "Code of Practice for Electrical Earthing Systems", "relation": "method"},
-        ],
-        # IT & Electronics
-        "IS 13252": [
-            {"is_code": "IS 616:2017", "title": "Audio, Video and Similar Electronic Apparatus Safety", "relation": "safety"},
-            {"is_code": "IS 9000 (Part 1)", "title": "Basic Environmental Testing Procedures for Electronic Items", "relation": "testing"},
-        ],
-        "IS 16444": [
-            {"is_code": "IS 13779", "title": "AC Static Watt-hour Meters Class 1 and 2 Specification", "relation": "testing"},
-            {"is_code": "IS 15884", "title": "Alternating Current Direct Connected Static Prepayment Meters", "relation": "safety"},
-        ],
-        "IS 16864": [
-            {"is_code": "IS 13252 (Part 1)", "title": "Information Technology Equipment - Safety Requirements", "relation": "safety"},
-            {"is_code": "IS 9000 (Part 1)", "title": "Basic Environmental Testing Procedures", "relation": "testing"},
-        ],
-    }
-
-    # Match exact code key
-    for key, items in CURATED_MAP.items():
-        if key in code or code in key:
-            refs.extend(items)
-            break
-
-    seen = set()
-    deduped = []
-    for r in refs:
-        is_c = r["is_code"]
-        if is_c not in seen and is_c.upper() != code:
-            seen.add(is_c)
-            deduped.append(r)
-
-    return deduped
-
-
     def _enrich_normative_refs(self, rec: Recommendation) -> List[Dict[str, str]]:
         """Ensure every standard has rich, domain-specific normative references for Knowledge Graph visualization."""
-        return enrich_normative_refs_for_item(rec.is_code, rec.title, rec.category, rec.normative_refs)
+        return rec.normative_refs or []
 
     def recommend(self, query: str) -> List[Recommendation]:
         """
@@ -1301,7 +1235,11 @@ def enrich_normative_refs_for_item(
         if self.llm is None:
             return self._fallback_clause(query, standards)
 
-        legal_context = self.retrieve_legal_context(query)
+        legal_items = self.get_legal_framework(query, standards)
+        legal_context = "\n".join(
+            f"- [{item['act_or_regulation']}] {item['provision']}: {item['excerpt']}"
+            for item in legal_items
+        )
         standards_text = "\n".join(
             f"- {s.is_code}: {s.title} (Score: {s.score:.2f})"
             f"{' [QCO Mandatory]' if s.qco_mandatory else ''}"
